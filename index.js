@@ -375,18 +375,21 @@ function orderBookCheck() {
       //targetBuy = buyPrice + .05;  //RECHECK THIS - TRY INCREASINF THE BUY PRICE BY  PERCENT (ALSO SEE IF ASSETS HAVE MAX MIN BASE QUOTE INC)
       //targetSell = sellPrice - .05; //RECHECK THIS BECAUSE ADDING/SUBTRACTING .05 TO AN ASSET PRICE MIGHT SCREW THE FIGURES..
       //targetBuy = buyPrice + (buyPrice * .005) // CREATES A 1/2% BUFFER INFRONT BUYWALL
-      targetSell = sellPrice - (sellPrice * .005) // CREATES A 1/2% BUFFER INFRONT SELLWALL
+      //targetSell = sellPrice - (sellPrice * .005) // CREATES A 1/2% BUFFER INFRONT SELLWALL
 
 
       //SET PRICES
       if ((bull === 'AAVEUSD') || (bull === 'AVAXUSD') || (bull === 'AXSUSD') || (bull === 'BCHUSD') || (bull === 'BTCUSD') || (bull === 'COMPUSD') || (bull === 'DASHUSD') || (bull === 'ETHUSD') || (bull === 'FILUSD') || (bull === 'LTCUSD') || (bull === 'PAXGUSD') || (bull === 'REPUSD') || (bull === 'ZECUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(2)
+        targetSell = (sellPrice - (sellPrice * .005)).toFixed(2)
       }
       if ((bull === 'ALGOUSD') || (bull === 'ATOMUSD') || (bull === 'CRVUSD') || (bull === 'EGLDUSD') || (bull === 'KNCUSD') || (bull === 'NEOUSD') || (bull === 'QTUMUSD') || (bull === 'SUSHIUSD') || (bull === 'ZENUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(3)
+        targetSell = (sellPrice - (sellPrice * .005)).toFixed(3)
       }
       if ((bull === 'ADAUSD') || (bull === 'AMPUSD') || (bull === 'ANKRUSD') || (bull === 'BANDUSD') || (bull === 'BATUSD') || (bull === 'BNBUSD') || (bull === 'BUSDUSD') || (bull === 'DAIUSD') || (bull === 'DOGEUSD') || (bull === 'ENJUSD') || (bull === 'EOSUSD') || (bull === 'ETCUSD') || (bull === 'GRTUSD') || (bull === 'HBARUSD') || (bull === 'HNTUSD') || (bull === 'ICXUSD') || (bull === 'IOTAUSD') || (bull === 'LINKUSD') || (bull === 'MANAUSD') || (bull === 'MATICUSD') || (bull === 'MKRUSD') || (bull === 'NANOUSD') || (bull === 'OMGUSD') || (bull === 'ONEUSD') || (bull === 'ONTUSD') || (bull === 'OXTUSD') || (bull === 'RVNUSD') || (bull === 'SOLUSD') || (bull === 'STORJUSD') || (bull === 'UNIUSD') || (bull === 'USDCUSD') || (bull === 'USDTUSD') || (bull === 'VETUSD') || (bull === 'VTHOUSD') || (bull === 'WAVESUSD') || (bull === 'XLMUSD') || (bull === 'XTZUSD') || (bull === 'ZILUSD') || (bull === 'ZRXUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(4)
+        targetSell = (sellPrice - (sellPrice * .005)).toFixed(4)
       }
 
       //SET QUANTITIES
@@ -426,6 +429,7 @@ function orderBookCheck() {
       console.log('\nTARGET PRICES\n================');
       console.log(`Targeted Buy Price: ${targetBuy}`);
       console.log(`Targeted Sell Price: ${targetSell}`)
+      console.log(`1% Profit Price: ${onePercentGain}`)
       console.log('================\n');
 
       dailyTicker();
