@@ -1,0 +1,14 @@
+{
+  "name": "binanceus-trader-js",
+  "version": "1.0.0",
+  "description": "Algorithmic Binance US Crypto Trader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@GTheCodeGuy",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.1.0"
+  }
+}
