@@ -382,14 +382,20 @@ function orderBookCheck() {
       if ((bull === 'AAVEUSD') || (bull === 'AVAXUSD') || (bull === 'AXSUSD') || (bull === 'BCHUSD') || (bull === 'BTCUSD') || (bull === 'COMPUSD') || (bull === 'DASHUSD') || (bull === 'ETHUSD') || (bull === 'FILUSD') || (bull === 'LTCUSD') || (bull === 'PAXGUSD') || (bull === 'REPUSD') || (bull === 'ZECUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(2)
         targetSell = (sellPrice - (sellPrice * .005)).toFixed(2)
+        let oPG = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
+        onePercentGain = oPG.toFixed(2)
       }
       if ((bull === 'ALGOUSD') || (bull === 'ATOMUSD') || (bull === 'CRVUSD') || (bull === 'EGLDUSD') || (bull === 'KNCUSD') || (bull === 'NEOUSD') || (bull === 'QTUMUSD') || (bull === 'SUSHIUSD') || (bull === 'ZENUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(3)
         targetSell = (sellPrice - (sellPrice * .005)).toFixed(3)
+        let oPG = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
+        onePercentGain = oPG.toFixed(3)
       }
       if ((bull === 'ADAUSD') || (bull === 'AMPUSD') || (bull === 'ANKRUSD') || (bull === 'BANDUSD') || (bull === 'BATUSD') || (bull === 'BNBUSD') || (bull === 'BUSDUSD') || (bull === 'DAIUSD') || (bull === 'DOGEUSD') || (bull === 'ENJUSD') || (bull === 'EOSUSD') || (bull === 'ETCUSD') || (bull === 'GRTUSD') || (bull === 'HBARUSD') || (bull === 'HNTUSD') || (bull === 'ICXUSD') || (bull === 'IOTAUSD') || (bull === 'LINKUSD') || (bull === 'MANAUSD') || (bull === 'MATICUSD') || (bull === 'MKRUSD') || (bull === 'NANOUSD') || (bull === 'OMGUSD') || (bull === 'ONEUSD') || (bull === 'ONTUSD') || (bull === 'OXTUSD') || (bull === 'RVNUSD') || (bull === 'SOLUSD') || (bull === 'STORJUSD') || (bull === 'UNIUSD') || (bull === 'USDCUSD') || (bull === 'USDTUSD') || (bull === 'VETUSD') || (bull === 'VTHOUSD') || (bull === 'WAVESUSD') || (bull === 'XLMUSD') || (bull === 'XTZUSD') || (bull === 'ZILUSD') || (bull === 'ZRXUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(4)
         targetSell = (sellPrice - (sellPrice * .005)).toFixed(4)
+        let oPG = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
+        onePercentGain = oPG.toFixed(4)
       }
 
       //SET QUANTITIES
@@ -415,8 +421,8 @@ function orderBookCheck() {
         quantity = (investment / targetBuy).toFixed(0)
       }
 
-      onePercentGain = targetBuy + (targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
-      stopLoss = targetBuy - (targetBuy * .40)
+      //onePercentGain = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
+      stopLoss = parseFloat(targetBuy) - parseFloat(targetBuy * .40)
       quantity = investment / targetBuy
 
       console.log(`\n(((SELECTED ASSET: ${bull})))`)
