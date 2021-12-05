@@ -11,6 +11,8 @@ const keys = {
   "akey": 'xjYhXgHSuLnaePMyK9cp06yDkrs2j6GcYg6wnmZRiKqPIpvGoLt35x7jnm2o4vJY',
   "skey": '78U50i1ZOCg9Cxuve2ZkdwzjViGuRDUasvVYE4YQ1xY80g7yLBDCmA1MqqvZ2Hei'
 }
+const burl = "https://api.binance.us";
+let endPoint = "/api/v3/order";
 
 let usdAssets = [];
 let assetPrices = [];
@@ -60,7 +62,7 @@ let buyPrice = undefined;
 let sellPrice = undefined;
 let targetBuy = undefined;
 let targetSell = undefined;
-let orderQty = undefined;
+let orderId = undefined;
 let percentAmount = undefined;
 let percentGain = undefined;
 let pastDailyClose = undefined;
@@ -381,49 +383,64 @@ function orderBookCheck() {
       //SET PRICES
       if ((bull === 'AAVEUSD') || (bull === 'AVAXUSD') || (bull === 'AXSUSD') || (bull === 'BCHUSD') || (bull === 'BTCUSD') || (bull === 'COMPUSD') || (bull === 'DASHUSD') || (bull === 'ETHUSD') || (bull === 'FILUSD') || (bull === 'LTCUSD') || (bull === 'PAXGUSD') || (bull === 'REPUSD') || (bull === 'ZECUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(2)
+        targetBuy = parseFloat(targetBuy)
         targetSell = (sellPrice - (sellPrice * .005)).toFixed(2)
+        targetSell = parseFloat(targetSell)
         let oPG = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
         onePercentGain = oPG.toFixed(2)
       }
       if ((bull === 'ALGOUSD') || (bull === 'ATOMUSD') || (bull === 'CRVUSD') || (bull === 'EGLDUSD') || (bull === 'KNCUSD') || (bull === 'NEOUSD') || (bull === 'QTUMUSD') || (bull === 'SUSHIUSD') || (bull === 'ZENUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(3)
+        targetBuy = parseFloat(targetBuy)
         targetSell = (sellPrice - (sellPrice * .005)).toFixed(3)
+        targetSell = parseFloat(targetSell)
         let oPG = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
         onePercentGain = oPG.toFixed(3)
+        onePercentGain = parseFloat(onePercentGain)
       }
       if ((bull === 'ADAUSD') || (bull === 'AMPUSD') || (bull === 'ANKRUSD') || (bull === 'BANDUSD') || (bull === 'BATUSD') || (bull === 'BNBUSD') || (bull === 'BUSDUSD') || (bull === 'DAIUSD') || (bull === 'DOGEUSD') || (bull === 'ENJUSD') || (bull === 'EOSUSD') || (bull === 'ETCUSD') || (bull === 'GRTUSD') || (bull === 'HBARUSD') || (bull === 'HNTUSD') || (bull === 'ICXUSD') || (bull === 'IOTAUSD') || (bull === 'LINKUSD') || (bull === 'MANAUSD') || (bull === 'MATICUSD') || (bull === 'MKRUSD') || (bull === 'NANOUSD') || (bull === 'OMGUSD') || (bull === 'ONEUSD') || (bull === 'ONTUSD') || (bull === 'OXTUSD') || (bull === 'RVNUSD') || (bull === 'SOLUSD') || (bull === 'STORJUSD') || (bull === 'UNIUSD') || (bull === 'USDCUSD') || (bull === 'USDTUSD') || (bull === 'VETUSD') || (bull === 'VTHOUSD') || (bull === 'WAVESUSD') || (bull === 'XLMUSD') || (bull === 'XTZUSD') || (bull === 'ZILUSD') || (bull === 'ZRXUSD')) {
         targetBuy = (buyPrice + (buyPrice * .005)).toFixed(4)
+        targetBuy = parseFloat(targetBuy)
         targetSell = (sellPrice - (sellPrice * .005)).toFixed(4)
+        targetSell = parseFloat(targetSell)
         let oPG = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
         onePercentGain = oPG.toFixed(4)
+        onePercentGain = parseFloat(onePercentGain)
       }
 
       //SET QUANTITIES
       if ((bull === 'BTCUSD') || (bull === 'PAXGUSD')) {
         quantity = (investment / targetBuy).toFixed(6)
+        quantity = parseFloat(quantity)
       }
       if ((bull === 'BCHUSD') || (bull === 'COMPUSD') || (bull === 'DASHUSD') || (bull === 'ETHUSD') || (bull === 'LTCUSD') || (bull === 'MKRUSD') || (bull === 'ZECUSD')) {
         quantity = (investment / targetBuy).toFixed(5)
+        quantity = parseFloat(quantity)
       }
       if ((bull === 'AAVEUSD') || (bull === 'FILUSD')) {
         quantity = (investment / targetBuy).toFixed(4)
+        quantity = parseFloat(quantity)
       }
       if ((bull === 'ALGOUSD') || (bull === 'ATOMUSD') || (bull === 'BNBUSD') || (bull === 'EGLDUSD') || (bull === 'KNCUSD') || (bull === 'NEOUSD') || (bull === 'QTUMUSD') || (bull === 'REPUSD') || (bull === 'SUSHIUSD') || (bull === 'ZENUSD')) {
         quantity = (investment / targetBuy).toFixed(3)
+        quantity = parseFloat(quantity)
       }
       if ((bull === 'AVAXUSD') || (bull === 'AXSUSD') || (bull === 'BANDUSD') || (bull === 'BATUSD') || (bull === 'BUSDUSD') || (bull === 'DAIUSD') || (bull === 'EOSUSD') || (bull === 'ETCUSD') || (bull === 'GRTUSD') || (bull === 'HNTUSD') || (bull === 'ICXUSD') || (bull === 'IOTAUSD') || (bull === 'LINKUSD') || (bull === 'MANAUSD') || (bull === 'NANOUSD') || (bull === 'OMGUSD') || (bull === 'ONTUSD') || (bull === 'SOLUSD') || (bull === 'STORJUSD') || (bull === 'UNIUSD') || (bull === 'USDCUSD') || (bull === 'USDTUSD') || (bull === 'WAVESUSD') || (bull === 'XTZUSD') || (bull === 'ZRXUSD')) {
         quantity = (investment / targetBuy).toFixed(2)
+        quantity = parseFloat(quantity)
       }
       if ((bull === 'ADAUSD') || (bull === 'AMPUSD') || (bull === 'ANKRUSD') || (bull === 'CRVUSD') || (bull === 'ENJUSD') || (bull === 'HBARUSD') || (bull === 'MATICUSD') || (bull === 'ONEUSD') || (bull === 'RVNUSD') || (bull === 'XLMUSD') || (bull === 'ZILUSD')) {
         quantity = (investment / targetBuy).toFixed(1)
+        quantity = parseFloat(quantity)
       }
       if ((bull === 'DOGEUSD') || (bull === 'VETUSD') || (bull === 'VTHOUSD')) {
         quantity = (investment / targetBuy).toFixed(0)
+        quantity = parseFloat(quantity)
       }
 
       //onePercentGain = parseFloat(targetBuy) + parseFloat(targetBuy * .01) //CALCULATES VALUE OF 1% GREATER THAN TARGETBUY
-      stopLoss = parseFloat(targetBuy) - parseFloat(targetBuy * .40)
-      quantity = investment / targetBuy
+      stopLoss = targetBuy - (targetBuy * .40)
+      //quantity = investment / targetBuy
 
       console.log(`\n(((SELECTED ASSET: ${bull})))`)
       console.log('\nLARGEST ORDERS WALLS\n================');
@@ -468,11 +485,6 @@ function dailyTicker() {
 }
 
 function riskAssesment() {
-  //FUNCTION VARIABLES
-  //gap = targetSell - targetBuy
-  //percentAmount = .05
-  //percentGain = (targetBuy * percentAmount) + targetBuy
-
 
   //CANDLESTICK 24HR INFO
   fetch('https://api.binance.us/api/v3/klines?symbol=' + bull + '&interval=1d&limit=2')
@@ -565,8 +577,6 @@ function placeOrder() {
   //SIGNED API VARIABLES
   //priceVar = parseFloat(orderPrice)
   //quantityVar = parseFloat(orderQty)
-  const burl = "https://api.binance.us";
-  let endPoint = "/api/v3/order";
   let dataQueryStringOrder = `symbol=${bull}&side=BUY&type=LIMIT&timeInForce=GTC&quantity=${quantity}&price=${targetBuy}&recvWindow=20000&timestamp=` + Date.now();
   let signature = crypto.createHmac('sha256', keys['skey']).update(dataQueryStringOrder).digest('hex');
   let urlOrder = burl + endPoint + '?' + dataQueryStringOrder + '&signature=' + signature;
@@ -589,6 +599,7 @@ function placeOrder() {
       const orderDate = parseFloat(data.transactTime)
       const date = new Date(orderDate)
       let x = 0
+      orderId = data.orderId
 
       console.log(`\n${bull} ORDER REPORT\n=====================`)
       console.log(`Symbol: ${bull}`)
@@ -607,16 +618,19 @@ function placeOrder() {
 
       //START CHECK ORDER LOOP
       function orderLoop() {
-        setTimeout(function () { checkOrder(); }, 5000);
+        setTimeout(() => {
+          checkOrder();
+        }, 5000);
       }
 
       //CHECKS THE STATUS OF THE ORDER
       function checkOrder() {
-        const burl = "https://api.binance.us";
+        const burl2 = "https://api.binance.us";
         let endPoint = "/api/v3/order";
-        let dataQueryStringCheck = `symbol=${bull}&timestamp=` + Date.now();
+        let dataQueryStringCheck = `symbol=${bull}&orderId=${orderId}&timestamp=` + Date.now();
         let signature = crypto.createHmac('sha256', keys['skey']).update(dataQueryStringCheck).digest('hex');
-        let urlCheck = burl + endPoint + '?' + dataQueryStringCheck + '&signature=' + signature;
+        let urlCheck = burl2 + endPoint + '?' + dataQueryStringCheck + '&signature=' + signature;
+
         //CHECK ORDER STATUS
         fetch(urlCheck, {
           method: "GET",
@@ -628,23 +642,54 @@ function placeOrder() {
 
           .then(response => response.json())
           .then(data => {
+            //console.log(`CHECK ORDER RESPONSE\n=================`)
+            //console.log(data)
 
-            if ((data.status === 'NEW') && (x != 12)) {
-              console.log(`ORDER NOT FILLED`)
+            if ((data.status === 'NEW') && (x !== 36)) { //12 = 1 min; 24 = 2 min; 36 = 3 min;
+              console.log(`${bull} ORDER CHECK NO.${x} - ORDER NOT FILLED`)
               x++
               orderLoop();
             }
+
+            if ((data.status === 'NEW') && (x === 36)){
+              console.log(`${bull} ORDER CHECK - ORDER TIMED OUT`)
+              console.log(`ORDER CANCELLED..\nRESETTING ALGORITHM..\n`)
+              x = 0
+
+              //CANCEL CURRENT ORDER
+              let dataQueryCancel = `symbol=${bull}&orderId=${orderId}&recvWindow=20000&timestamp=` + Date.now();
+              let signature3 = crypto.createHmac('sha256', keys['skey']).update(dataQueryCancel).digest('hex');
+              let cancelUrl = burl + endPoint + '?' + dataQueryCancel + '&signature=' + signature3;
+              fetch(cancelUrl, {
+                method: "DELETE",
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                  "X-MBX-APIKEY": 'xjYhXgHSuLnaePMyK9cp06yDkrs2j6GcYg6wnmZRiKqPIpvGoLt35x7jnm2o4vJY'
+                }
+              })
+              .then(response => response.json())
+              .then(cancelData => {
+                console.log(`CANCELLING ORDER...`)
+                console.log(`CANCEL ORDER REPORT\n===============`)
+                console.log(cancelData)
+                console.log(`RESETTING ALGORITHM...\n`)
+              })
+              //RESET ALGORITHM
+              resetApp();
+            }
+
             if (data.status === 'CANCELLED') {
               console.log(`ORDER CANCELLED..\nRESETTING ALGORITHM..\n`)
               resetApp();
             }
+
             if (data.status === 'FILLED') {
-              console.log(`ORDER FILLED`);
+              console.log(`${bull} ORDER CHECK - ORDER FILLED`);
               //POST STOP LOSS
               let dataQueryStringLoss = `symbol=${bull}&side=SELL&type=STOP_LOSS&timeInForce=GTC&quantity=${quantity}&stopPrice=${stopLoss}&recvWindow=20000&timestamp=` + Date.now();
               let signature2 = crypto.createHmac('sha256', keys['skey']).update(dataQueryStringLoss).digest('hex');
               let stopUrl = burl + endPoint + '?' + dataQueryStringLoss + '&signature=' + signature2;
-              fetch(stopurl, {
+              fetch(stopUrl, {
                 method: "POST",
                 headers: {
                   "Content-type": "application/json; charset=UTF-8",
@@ -687,8 +732,8 @@ function placeOrder() {
 
                   //MONITOR ORDER STATUS
                   function monitorOrder() {
-                    const burl = "https://api.binance.us";
-                    let endPoint = "/api/v3/order";
+                    //const burl = "https://api.binance.us";
+                    //let endPoint = "/api/v3/order";
                     let dataQueryStringMonitor = `symbol=${bull}&timestamp=` + Date.now();
                     let signature = crypto.createHmac('sha256', keys['skey']).update(dataQueryStringMonitor).digest('hex');
                     let urlMonitor = burl + endPoint + '?' + dataQueryStringMonitor + '&signature=' + signature;
@@ -749,8 +794,6 @@ function placeOrder() {
   //THEN CHECK FOR SALE THEN RESET
 }
 
-
-
 function resetApp() {
   //CLEARS ALL THE VARIABLES
   usdAssets = [];
@@ -801,7 +844,7 @@ function resetApp() {
   sellPrice = undefined;
   targetBuy = undefined;
   targetSell = undefined;
-  orderQty = undefined;
+  orderId = undefined;
   percentAmount = undefined;
   percentGain = undefined;
   pastDailyClose = undefined;
