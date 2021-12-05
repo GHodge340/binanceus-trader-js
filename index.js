@@ -5,7 +5,7 @@
 //API DOCUMENTATION: https://github.com/binance-us/binance-official-api-docs/blob/master/rest-api.md#new-order--trade
 
 //GLOBAL VARIABLES
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
 const crypto = require('crypto');
 const keys = {
   "akey": 'xjYhXgHSuLnaePMyK9cp06yDkrs2j6GcYg6wnmZRiKqPIpvGoLt35x7jnm2o4vJY',
